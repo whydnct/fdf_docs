@@ -142,7 +142,7 @@ int	main(void)
 ```
 
 - we have an image. We need the memory address whose bits we're gonna mutate so we can write pixels.
-	- We get that address with.
+	- We get that address with:
 
 ```c
 #include <mlx.h>
@@ -173,23 +173,17 @@ int	main(void)
 }
 ```
 
-Notice how we pass the `bits_per_pixel`, `line_length` and `endian` variables
-by reference? These will be set accordingly by MiniLibX as per described above.
+- `bits_per_pixel`, `line_length` and `endian` are set by MiniLibX.
 
-Now we have the image address, but still no pixels. Before we start with this,
-we must understand that the bytes are not aligned, this means that the
-`line_length` differs from the actual window width. We therefore should ALWAYS
-calculate the memory offset using the line length set by `mlx_get_data_addr`.
-
-We can calculate it very easily by using the following formula:
+- Now we have the image address, but still no pixels.
+- Before we start with this, we must understand that the bytes are not aligned, == the `line_length` differs from the actual window width.
+	- So we should ALWAYS calculate the `memory offset` using the line length set by `mlx_get_data_addr`.
 
 ```c
 int offset = (y * line_length + x * (bits_per_pixel / 8));
 ```
 
-Now that we know where to write, it becomes very easy to write a function that
-will mimic the behaviour of `mlx_pixel_put` but will simply be many times
-faster:
+- Now that we know where to write, we can write a function like `mlx_pixel_put` but much faster:
 
 ```c
 typedef struct	s_data {
@@ -209,21 +203,19 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 }
 ```
 
-Note that this will cause an issue. Because an image is represented in real time
-in a window, changing the same image will cause a bunch of screen-tearing when
-writing to it. You should therefore create two or more images to hold your
-frames temporarily. You can then write to a temporary image, so that you don't
-have to write to the currently presented image.
+- Screen-tearing.
+	- Caused by changing an image represented in real time in a window.
+	- You create 2 or more images to hold the frames temporarily.
+		- You write them to a temporary image so you dont have to write to the presented image.
 
 ## Pushing images to a window
 
-Now that we can finally create our image, we should also push it to the window,
-so that we can actually see it. This is pretty straight forward, let's take a
-look at how we can write a red pixel at (5,5) and put it to our window:
+- Image created
+	- we can push it to a window so that we can see it.
 
 ```c
 #include <mlx.h>
-
+// Example: write a pixel at (5,5) and put it to the window
 typedef struct	s_data {
 	void	*img;
 	char	*addr;
@@ -253,10 +245,7 @@ Note that `0x00FF0000` is the hex representation of `ARGB(0,255,0,0)`.
 
 ## Test your skills!
 
-Now you that you understand the basics, get comfortable with the library and do
-some funky stuff! Here are a few ideas:
-- Print squares, circles, triangles and hexagons on the screen by writing the
-pixels accordingly.
-- Try adding gradients, making rainbows, and get comfortable with using the rgb
-colors.
+Now you that you understand the basics, get comfortable with the library and do some funky stuff! Here are a few ideas:
+- Print squares, circles, triangles and hexagons on the screen by writing the pixels accordingly.
+- Try adding gradients, making rainbows, and get comfortable with using the rgb colors.
 - Try making textures by generating the image in loops.
