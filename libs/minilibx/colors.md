@@ -17,13 +17,11 @@ nav_order: 3
 
 ---
 
-Colors are presented in an int format. It therefore requires some tricky things
-in order to obtain an int which can contain the ARGB values.
+Colors are presented in an int format. It therefore requires some tricky things in order to obtain an int which can contain the ARGB values.
 
 ## The color integer standard
 
-We shift bits to use the TRGB format. To define a color, we initialize it as
-follows: `0xTTRRGGBB`, where each character represents the following:
+We shift bits to use the TRGB format. To define a color, we initialize it as follows: `0xTTRRGGBB`, where each character represents the following:
 
 Letter | Description
 :-----:|:-----------:
@@ -49,10 +47,11 @@ We can use two methods to encode and decode colors:
 
 ### BitShifting
 
-Since each byte contains `2^8 = 256` values ([1 byte = 8 bits](https://www.google.com/search?q=size+bytes+to+bit)),
-and RGB values range from 0 to 255, we can perfectly fit a integer (as an
-int is 4 bytes). In order to set the values programatically we use `bitshifting`.
-Let's create a function which does precisely that for us, shall we?
+- Each byte has `2^8 = 256` values ([1 byte = 8 bits](https://www.google.com/search?q=size+bytes+to+bit)),
+	- RGB values range from 0 to 255
+		- we can fit a integer (as an int is 4 bytes).
+- To set the values programatically we use `bitshifting`.
+Let's create that function:
 
 ```c
 int	create_trgb(int t, int r, int g, int b)
@@ -61,9 +60,8 @@ int	create_trgb(int t, int r, int g, int b)
 }
 ```
 
-Because ints are stored from right to left, we need to bitshift each value the
-according amount of bits backwards. We can also do the exact opposite and
-retrieve integer values from a encoded TRGB integer.
+Because ints are stored from right to left, we need to bitshift each value the according amount of bits backwards.
+To retrieve integer values from a encoded TRGB integer:
 
 ```c
 int	get_t(int trgb)
@@ -89,10 +87,11 @@ int	get_b(int trgb)
 
 ### Char/int conversion
 
-Since each byte contains `2^8 = 256` values ([1 byte = 8 bits](https://www.google.com/search?q=size+bytes+to+bit)),
-and RGB values range from 0 to 255, we can perfectly fit a `unsigned char` for each TRGB parameters `{T, R, G, B}`
-(char is 1 byte) and fit a `int` for the TRGB value (int is 4 bytes). In order to set the values programatically
-we use type converting.
+- Each byte contains `2^8 = 256` values ([1 byte = 8 bits](https://www.google.com/search?q=size+bytes+to+bit)),
+	- RGB values range from 0 to 255,
+		- we can use a `unsigned char` for each TRGB parameters `{T, R, G, B}` (char is 1 byte)
+		- and use a `int` for the TRGB value (int is 4 bytes).
+- To set the values programatically we use type converting.
 
 ```c
 int	create_trgb(unsigned char t, unsigned char r, unsigned char g, unsigned char b)
@@ -121,8 +120,7 @@ unsigned char	get_b(int trgb)
 }
 ```
 
-To understand the conversion you can refere to the table bellow, where `0x0FAE1`
-is the variable address of `int trgb`.
+To understand the conversion you can refere to the table bellow, where `0x0FAE1` is the variable address of `int trgb`.
 
 | Address |       char      |       int       |
 | ------- | :-------------: | :-------------: |
@@ -133,11 +131,6 @@ is the variable address of `int trgb`.
 
 ## Test your skills!
 
-Now that you understand the basics of how the colors can be initialized, get
-comfy and try creating the following color manipulation functions:
-- `add_shade` is a function that accepts a double (distance) and a int (color)
-as arguments, 0 will add no shading to the color, whilst 1 will make the color
-completely dark. 0.5 will dim it halfway, and .25 a quarter way. You get the
-point.
-- `get_opposite` is a function that accepts a int (color) as argument and that
-will invert the color accordingly.
+Now that you understand the basics of how the colors can be initialized, get comfy and try creating the following color manipulation functions:
+- `add_shade` is a function that accepts a double (distance) and a int (color) as arguments, 0 will add no shading to the color, whilst 1 will make the color completely dark. 0.5 will dim it halfway, and .25 a quarter way. You get the point.
+- `get_opposite` is a function that accepts a int (color) as argument and that will invert the color accordingly.
