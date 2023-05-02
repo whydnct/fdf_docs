@@ -19,19 +19,13 @@ nav_order: 4
 
 ## Introduction
 
-Events are the foundation of writing interactive applications in MiniLibX. It is
-therefore of essence that you fully comprehend this chapter as this will be of
-use in your future graphical projects.
+To build interactive applications.
 
-All hooks in MiniLibX are nothing more than a function that gets called whenever
-a event is triggered. Mastering all these events won't be neccessary, however,
-we will quickly go over each X11 event accordingly.
+- Hooks == function that is called when an event is triggered
 
 ### MacOS version
 
-Note: On MacOS - Cocoa (AppKit) and OpenGL - version, minilibx has partial support
-of X11 events and doesn't support X11 mask (x_mask argument of mlx_hook is useless,
-keep it at 0).
+Note: On MacOS - Cocoa (AppKit) and OpenGL - version, minilibx has partial support of X11 events and doesn't support X11 mask (x_mask argument of mlx_hook is useless, keep it at 0).
 
 Supported events:
   
@@ -52,9 +46,7 @@ mlx_hook(vars.win, ON_DESTROY, 0, close, &vars);
 
 ## X11 interface
 
-X11 is the library that is used alongside of MiniLibX. It therefore is no secret
-that this header is very useful for finding all the according events of
-MiniLibX.
+X11 is the library that is used alongside of MiniLibX. This header is very useful for finding all the according events of MiniLibX.
 
 ### X11 events
 
@@ -76,15 +68,14 @@ There are a number of events to which you may describe.
 | `13` | GraphicsExpose| | `25` | ResizeRequest    | |      |                  |
 
 
-If you can't figure out what some events are, don't worry, because you probably
-won't need them. If you do, go read [the documentation of each X11 events](https://tronche.com/gui/x/xlib/events/).
+If you can't figure out what some events are, don't worry, because you probably won't need them. If you do, go read [the documentation of each X11 events](https://tronche.com/gui/x/xlib/events/).
 
 ### X11 masks
 
-Each X11 event, also has a according mask. This way you can register to only
-one key when it triggers, or to all keys if you leave your mask to the default.
-Key masks therefore allow you to whitelist / blacklist events from your event
-subscriptions. The following masks are allowed:
+- Key masks allow you to whitelist / blacklist events from your event subscriptions.
+	- Each X11 event, has a according mask.
+	- This way you can register to only one key when it triggers, or to all keys if you leave your mask to the default.
+- The following masks are allowed:
 
 | Mask       | Description      | | Mask       | Description          |
 | :--------: | ---------------- |-| :--------: | -------------------- |
@@ -106,11 +97,7 @@ subscriptions. The following masks are allowed:
 
 ### mlx_hook
 
-Hooking into events is one of the most powerful tools that MiniLibX provides. It
-allows you to register to any of the aforementioned events with the call of a
-simple hook registration function. 
-
-To achieve this, we call the function `mlx_hook`.
+- It allows you to register the call `mlx_hook` to any of the events with the call.
 
 ```c
 void mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*f)(), void *param)
@@ -120,7 +107,7 @@ void mlx_hook(mlx_win_list_t *win_ptr, int x_event, int x_mask, int (*f)(), void
 
 ### Prototype of event functions
 
-Event functions have a different prototype depending of the hooking event.
+Event functions have a different prototype depending on the hooking event.
 
 | Hooking event | code | Prototype            |
 | ------------- | :--: | -------------------- |
@@ -144,8 +131,7 @@ Minilibx api has some alias hooking function:
 
 ### Example
 
-For example instead of calling `mlx_key_hook`, we can also register to the
-`KeyPress` and `KeyRelease` events. Lets take a look:
+For example instead of calling `mlx_key_hook`, we can also register to the `KeyPress` and `KeyRelease` events. Lets take a look:
 
 ```c
 #include <mlx.h>
@@ -172,17 +158,14 @@ int	main(void)
 }
 ```
 
-Here we register to the `KeyPress` event with the according `KeyPressMask`. Now
-whenever we press a key, the window will be closed.
+Here we register to the `KeyPress` event with the according `KeyPressMask`.
+Now whenever we press a key, the window will close.
 
 ## Test your skills!
 
-Now that you have a faint idea of how all of this works, we encourage you to
-make the hook handlers. Whenever the:
+Now that you have a faint idea of how all of this works, we encourage you to make the hook handlers. Whenever the:
 - <kbd>ESC</kbd> key is pressed, your window should close.
 - window is resized, you should print something in your terminal.
 - the red cross is clicked, your window should close.
-- you press a key longer than x seconds, you should print something in your
-terminal.
-- mouse enters the window, you should print `Hello!` in your terminal, when it
-leaves, you should print `Bye!`.
+- you press a key longer than x seconds, you should print something in your terminal.
+- mouse enters the window, you should print `Hello!` in your terminal, when it leaves, you should print `Bye!`.

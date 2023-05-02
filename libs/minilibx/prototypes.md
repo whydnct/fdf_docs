@@ -19,17 +19,9 @@ nav_order: 10
 
 ## Introduction
 
-MiniLibX is a tiny graphics library which allows you to do the most basic
-things for rendering something. This can vary from making a copy of Wolfenstein,
-to presenting complicated data in a simple form.
-
-It is truly recommended to catch up on bitwise operands if you have no clue
-what they are.
-
 ## Initialization functions
 
-These are the standard functions that are almost always required to even start
-using MiniLibX.
+These are the standard functions that are almost always required to even start using MiniLibX.
 
 ### mlx_init
 
@@ -65,9 +57,9 @@ void	*mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);
 
 ### mlx_clear_window
 
-Clears the current window. This is not a recommended function to use. Instead
-it is recommended to use the function `mlx_put_image_to_window` with a recycled
-image that you have cleared.
+Clears the current window.
+This is not a recommended function to use.
+Instead it is recommended to use the function `mlx_put_image_to_window` with a recycled image that you have cleared.
 
 ```c
 /*
@@ -101,8 +93,8 @@ These are functions that can help you with conversions and pixel writing.
 
 ### mlx_get_color_value
 
-Get the color value accordingly from a int. This is useful for converting a
-self-declared int before writing it to certain bits.
+Get the color value accordingly from a int.
+This is useful for converting a self-declared int before writing it to certain bits.
 
 ```c
 /*
@@ -117,11 +109,11 @@ uint	mlx_get_color_value(void *mlx_ptr, int color);
 
 ### mlx_pixel_put
 
-Puts a pixel on the screen. This function is NOT recommended for use. It
-will lock the window output, force a refresh and a recalculation. It is
-therefore suggested to render a image and push that using the
-`mlx_put_image_to_window` function. You can find more about that in the
-[Getting Started](./getting_started.html) chapter.
+- Puts a pixel on the screen.
+- This function is NOT recommended for use.
+	- It will lock the window output, force a refresh and a recalculation.
+	- It is suggested to render a image and push that using the `mlx_put_image_to_window` function.
+		- You can find more about that in the [Getting Started](./getting_started.html) chapter.
 
 ```c
 /*
@@ -157,14 +149,15 @@ int		mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color, char 
 
 ## Image functions
 
-Image object related functions. These will provide effective methods to mutate
-frames one-by-one.
+Image object related functions.
+These will provide effective methods to mutate frames one-by-one.
 
 ### mlx_new_image
 
-Creates a new MLX compatible image. This is the recommended way to buffer the
-image you are rendering. It will accept a pointer to your MLX instance and
-requires a width and height. Will return a reference pointer to the image.
+- Creates a new MLX compatible image.
+- This is the recommended way to buffer the image you are rendering.
+	- It will accept a pointer to your MLX instance and requires a width and height.
+- Will return a reference pointer to the image.
 
 ```c
 /*
@@ -180,23 +173,17 @@ void	*mlx_new_image(void *mlx_ptr,int width,int height);
 
 ### mlx_get_data_addr
 
-Gets the memory address of the given image. Memory of images is weird. It will
-set the line size in your given pointer. To get or set the value of the pixel
-(5, 100) in an image size of (500, 500), we would need to locate the position
-as follows:
+- Gets the memory address of the given image.
+- It will set the line size in your given pointer.
+- To get or set the value of the pixel (5, 100) in an image size of (500, 500), we would need to locate the position as follows:
 
 ```c
 int pos = (y * size_line + x * (bits_per_pixel / 8));
 ```
 
-Here we multiply size_line by `y` as we need to skip `y` lines (and yes,
-line size is not equal to the amount of pixels in a line). We then add the
-remaining `x` units multiplied by `bits_per_pixel / 8` to align with the final
-location.
+Here we multiply size_line by `y` as we need to skip `y` lines (and yes, line size is not equal to the amount of pixels in a line). We then add the remaining `x` units multiplied by `bits_per_pixel / 8` to align with the final location.
 
-To modify each pixel with the correct color, we need to do some more fancy
-stuff. As we need to align the bits before writing, we need to do the following
-for the best result:
+To modify each pixel with the correct color, we need to do some more fancy stuff. As we need to align the bits before writing, we need to do the following for the best result:
 
 ```c
 char *mlx_data_addr = mlx_get_data_addr();
@@ -220,10 +207,9 @@ char	*mlx_get_data_addr(void *img_ptr, int *bits_per_pixel, int *size_line, int 
 
 ### mlx_put_image_to_window
 
-Puts an image to the given window instance at location (x,y). This is the
-recommended way to write large amounts of graphical data in one go. Do mind that
-when changing the memory of the locations, it will be displayed directly on the
-window.
+- Puts an image to the given window instance at location (x,y).
+- This is the recommended way to write large amounts of graphical data in one go.
+- Do mind that when changing the memory of the locations, it will be displayed directly on the window.
 
 ```c
 /*
